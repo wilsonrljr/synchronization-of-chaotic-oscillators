@@ -1,0 +1,11 @@
+function out = rossler2 (t,in)
+x=in(1); 
+y=in(2);
+z=in(3);
+a=0.2;
+b=0.2;
+c=5.7;
+xdot = -y-z;
+ydot = x+a*y;
+zdot  = b + z*x-z*c;
+out = [xdot ydot zdot]';

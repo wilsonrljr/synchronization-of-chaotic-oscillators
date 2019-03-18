@@ -1,0 +1,15 @@
+% function dy = rossler(t,y,a,b,c,k,x1l,i)
+% %modelo de rossler (V1)
+% % dy = [
+% % -(y(2)+y(3)); % =dx/dt
+% % y(1)+a*y(2)+k.*x1l(i); % =dy/dt
+% % b+y(3)*y(1)-y(3)*c; % = dz/dt
+% % ];
+
+function dy = rossler(t,y,a,b,c,k,xd1,i)
+%modelo de rossler (equivalencia)
+dy = [
+-y(2)-y(3);
+y(1)+a*y(2)+k.*(xd1(i)-y(1));
+b+y(3)*(y(1)-c);
+];

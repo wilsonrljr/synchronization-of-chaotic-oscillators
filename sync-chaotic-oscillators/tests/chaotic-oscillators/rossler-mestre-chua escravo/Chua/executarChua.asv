@@ -1,0 +1,40 @@
+clear all; close all; clc;
+
+format long 
+    
+% parametros do modelo chua
+
+alfa = 15.6;
+beta = 28;
+m0 = -1.143;
+m1 = -0.714;
+
+%condições iniciais
+y0=[0.7; 0; 0;];
+
+xd1=load('xros.dat');
+k=0;
+
+dt =0.05; %passo de integração
+int=[0:dt:900]; %intervalo de simulação
+Y(:,1)=y0; %inicializa o vetor das saidas
+yin = y0;
+for i=1:length(int)
+    tempo = i*dt;
+    ysaida = rk4(@(t,y)chua(t,y,alfa,beta,m1,m0,k,xd1,i),dt,tempo,yin);
+    Y = [Y ysaida];
+    yin = ysaida;
+end
+
+y2=Y(2,:);
+
+plot(Y(3,:));
+xlord=Y(3,:);
+xlord=xlord;
+save('xchua_k0.dat','xlord','-ascii') 
+figure()
+plot(xlord,'b')
+hold on
+plot(xd1,'k')
+legend('Chua','Rossler');
+title('Sincronismo para k = 1000');

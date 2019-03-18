@@ -1,0 +1,55 @@
+%Lorenz map
+function rossler (T,initV)
+clear all
+clc
+%Initial condition
+initV =[-0.5 -0.2 0];
+%step
+h=1e-2;
+T = 0:h:1000;
+X=ode4(@rossler1, T, initV);
+X1 = ode4(@rossler1, T, initV);
+X2 = ode4(@rossler2, T, initV);
+
+
+lbe=abs(X1(:,1)-X2(:,1))/2;
+figure(1)
+plot(T,log10(lbe),'k.')
+hold on
+t1=T';
+aux=[find(log10(lbe)>-12)];
+lbe(1:aux(1))=[];
+t1(1:aux(1))=[];
+aux=[find(log10(lbe)>-2)];
+lbe(aux(1):end)=[];
+t1(aux(1):end)=[];
+aux1=polyfit(t1,log10(lbe),1);
+lyap=aux1(1)
+plot(t1,aux1(1)*t1+aux1(2),'r','LineWidth',2)
+hold off
+box off
+xlabel('t','FontSize',15)
+ylabel('log(|X1-X2|)','FontSize',15)
+set(gcf, 'PaperPosition', [0 0 30 20]); 
+set(gcf, 'PaperSize', [30 20]); 
+set(gca,'FontSize',15,'Fontname','Times New Roman')
+gtext(sprintf('%1.3f t %1.3f',aux1(1),aux1(2)),'Fontsize',15)
+% saveas(gcf, 'fig3', 'pdf')
+disp(lyap)
+
+function dx = rossler1(T, X)
+a = 0.2; b = 0.2;  c = 5.7;
+dx(1,1) = -X(2)-X(3);
+dx(2,1) = X(1)+a*X(2);
+dx(3,1) = b + X(3)*X(1)-X(3)*c;
+end
+
+
+function dx = rossler2(T, X)
+a = 0.2; b = 0.2;  c = 5.7;
+dx(1,1) = -X(2)-X(3);
+dx(2,1) = X(1)+a*X(2);
+dx(3,1) = b + X(3)*(X(1)-c);
+end
+
+end

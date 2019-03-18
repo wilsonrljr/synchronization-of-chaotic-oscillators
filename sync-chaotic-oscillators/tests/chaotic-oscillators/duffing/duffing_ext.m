@@ -1,0 +1,16 @@
+%equivalencias matematicas 
+
+
+% function dy = duffing(t,y,a,b)
+% 
+% dy = [
+% y(2);
+% a*cos(t)-b*y(2)-y(1)^3;
+% ];
+
+function dy = duffing_ext(t,y,a,b,k,xd1,i)
+
+dy = [
+y(2)+k.*xd1(i);
+a*cos(t)-b*y(2)-y(1)^3;
+];

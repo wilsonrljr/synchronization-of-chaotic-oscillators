@@ -1,0 +1,5 @@
+y = load('xlor_cond1=0.dat');
+y_l = load('xlor_cond2=0.dat');
+figure()
+%plot(y(10000:end),y_l(10000:end))
+plot(y,y_l,'k')
